@@ -1,1 +1,6 @@
-console.log('Hello world');
+class Game {
+
+}
+
+const game = new Game();
+console.log(game)
