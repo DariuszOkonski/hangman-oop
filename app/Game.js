@@ -1,6 +1,9 @@
 import { Quote } from './Quote.js';
 
 class Game {
+    currentStep = 0;
+    lastStep = 7;
+
     quotes = [
         {text: 'pan tadeusz', category: 'Utwor literacki'},
         {text: 'janko muzykant', category: 'Utwor literacki'},
@@ -20,14 +23,18 @@ class Game {
     }
     
     start() {
+        document.getElementsByClassName('step')[this.currentStep].style.opacity = 1;
         this.drawLetters();
-
         this.drawQuote();
     }    
 
     drawQuote() {
         const content = this.quote.getContent();
         this.wordWrapper.innerHTML = content;
+
+        if(!content.includes('_')) {
+            this.winning();
+        }
     }
 
     drawLetters() {
@@ -43,8 +50,29 @@ class Game {
     guess(letter, event) 
     {
         event.target.disabled = true;
-        this.quote.guess(letter);
-        this.drawQuote();
+        if(this.quote.guess(letter)) {
+            this.drawQuote();
+        } else {
+            this.currentStep++;
+            document.getElementsByClassName('step')[this.currentStep].style.opacity = 1;
+
+            // you loose
+            if(this.currentStep === this.lastStep) {
+                this.loosing();
+            }
+        }
+    }
+
+    winning() {
+        this.wordWrapper.innerHTML = 'GRATULACJE! WYGRYWASZ! KONIEC GRY';
+        this.lettersWrapper.innerHTML = '';
+        this.categoryWrapper.innerHTML = '';
+    }
+
+    loosing() {
+        this.wordWrapper.innerHTML = 'NIESTETY! PRZEGRYWASZ! TO KONIEC GRY';
+        this.lettersWrapper.innerHTML = '';
+        this.categoryWrapper.innerHTML = '';
     }
 }
 
