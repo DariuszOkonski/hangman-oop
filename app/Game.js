@@ -14,13 +14,16 @@ class Game {
         this.wordWrapper = wordWrapper;
         this.outputWrapper = outputWrapper;
 
-        const {text, category} = this.quotes[Math.floor(Math.random() * this.quotes.length)]
+        const {text, category} = this.quotes[Math.floor(Math.random() * this.quotes.length)];
         this.categoryWrapper.innerHTML = category;
         this.quote = new Quote(text);
     }
     
     start() {
-        this.drawLetters();        
+        this.drawLetters();
+
+        const content = this.quote.getContent();
+        this.wordWrapper.innerHTML = content;
     }    
 
     drawLetters() {
@@ -34,8 +37,8 @@ class Game {
     }
 
     guess(letter) {
-        console.log(letter)
-        console.log(this);
+        this.sentence = this.quote.guess(letter);
+        console.log(this.sentence);        
     }
 }
 
@@ -46,5 +49,5 @@ const game = new Game ({
     wordWrapper: document.getElementById('word'),
     outputWrapper: document.getElementById('output'),
 });
-console.log(game);
+// console.log(game);
 game.start();
