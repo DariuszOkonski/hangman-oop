@@ -1,6 +1,7 @@
-export class Quote {
+    export class Quote {
     constructor(text) {
         this.text = text;
+        this.guessed = [];
     }
 
     getText() {
@@ -10,10 +11,10 @@ export class Quote {
     getContent() {
         let content = "";
         for (const char of this.text) {
-            if(char !== ' ') {
-                content += '_';
+            if(char === ' ' || this.guessed.includes(char)) {
+                content += char;
             } else {
-                content += " ";
+                content += "_";
             }
         }
 
@@ -21,6 +22,11 @@ export class Quote {
     }
 
     guess(letter) {
-        return "sentence";
+        if(!this.text.includes(letter)) {
+            return false;
+        }
+
+        this.guessed.push(letter);
+        return true;
     }
 }

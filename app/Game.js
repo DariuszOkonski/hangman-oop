@@ -22,9 +22,13 @@ class Game {
     start() {
         this.drawLetters();
 
+        this.drawQuote();
+    }    
+
+    drawQuote() {
         const content = this.quote.getContent();
         this.wordWrapper.innerHTML = content;
-    }    
+    }
 
     drawLetters() {
         for (let i = 0; i < 26; i++) {
@@ -37,8 +41,8 @@ class Game {
     }
 
     guess(letter) {
-        this.sentence = this.quote.guess(letter);
-        console.log(this.sentence);        
+        this.quote.guess(letter);
+        this.drawQuote();
     }
 }
 
